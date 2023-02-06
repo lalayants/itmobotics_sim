@@ -39,7 +39,7 @@ class PyBulletRobot(robot.Robot):
         self.__tool_list = []
 
         self.__joint_limits: robot.JointLimits = None
-        print(self.__p)
+        # print(self.__p)
         self.reset()
 
         self.__joint_controller_params = {
@@ -282,14 +282,14 @@ class PyBulletRobot(robot.Robot):
 
         self.__base_pose = self._base_transform.t.tolist() # World position [x,y,z]
         self.__base_orient = R.from_matrix(self._base_transform.R).as_quat().tolist() # Quaternioun [x,y,z,w]
-        print("Loading urdf ", self._urdf_filename)
+        # print("Loading urdf ", self._urdf_filename)
 
         self.__robot_id = self.__p.loadURDF(
             self._urdf_filename,
             basePosition=self.__base_pose,
             baseOrientation=self.__base_orient,
-            useFixedBase=True,
-            flags=self.__p.URDF_USE_SELF_COLLISION
+            useFixedBase=False, # mb need to add param
+            # flags=self.__p.URDF_USE_SELF_COLLISION
         )
         self.__joint_id_for_link = {}
         self.__actuators_name_list = []
@@ -300,7 +300,7 @@ class PyBulletRobot(robot.Robot):
         for _id in range(self.__p.getNumJoints(self.__robot_id)):
             # print(p.getJointInfo(self.__robot_id, _id))
             joint_info = self.__p.getJointInfo(self.__robot_id, _id)
-            print(joint_info)
+            # print(joint_info)
             _name = joint_info[12].decode('UTF-8')
             if joint_info[4] != -1:
                 self.__actuators_name_list.append(_name)
