@@ -15,7 +15,7 @@
     <visual>
       <origin rpy="-1.570796 0 0" xyz="0 0 0.0225"/>
       <geometry>
-			  <mesh filename="meshes/socket.stl" scale="0.001 0.001 0.001"/>
+			  <mesh filename="meshes/socket/socket.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="orange">
         <color rgba="1 0.6 0 1"/>
@@ -24,7 +24,7 @@
     <collision>
       <origin rpy="-1.570796 0 0" xyz="0 0 0.0225"/>
       <geometry>
-	 	    <mesh filename="meshes/socket.stl" scale="0.001 0.001 0.001"/>
+	 	    <mesh filename="meshes/socket/socket.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>

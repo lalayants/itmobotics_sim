@@ -22,32 +22,23 @@ def main():
     __sim = PyBulletWorld(gui_mode = GUI_MODE.SIMPLE_GUI, time_step = 0.01, time_scale=1)
     __sim.add_object('table', 'tests/urdf/table.urdf', save=True)
     __sim.add_object('socket', 'example/urdf/socket.urdf', SE3(0.4,0.2,0.65), save=True)
-    __sim.add_object('plug', 'example/urdf/plug.urdf', SE3(0.4,-0.2,0.65), save=True)
 
 
-    __robot = __sim.add_robot('tests/urdf/ur5e_pybullet.urdf', SE3(0,0,0.625) , 'robot')
+    __robot = __sim.add_robot('example/urdf/ur5e_pybullet.urdf', SE3(0,0,0.625) , 'robot')
     __robot.joint_controller_params = controller_params
     __controller_joint_speed = JointVelocitiesController(__robot)
 
     __sim.reset()
 
-    # __robot.connect_tool('plug', 'example/urdf/plug.urdf',root_link='ee_tool', tf=SE3(0.0, 0.0, 0.1))
+    __robot.connect_tool('peg' ,'example/urdf/plug.urdf', root_link='ee_tool', tf=SE3(0.0, 0.0, 0), save=True)
     __robot.connect_camera('base_cam', 'camera_link')
 
     __robot.reset_joint_state(JointState.from_position(test_joint_pose))
-    # random_target_state = np.random.uniform(-0.1, 0.1, test_joint_pose.shape)
-    # target_motion.joint_state.joint_velocities = random_target_state
 
     while True: 
-        # ok = __controller_joint_speed.send_control_to_robot(target_motion)
-        # __sim.sim_step()
-        img, _ = __robot.get_image('base_cam')
+        ok = __controller_joint_speed.send_control_to_robot(target_motion)
         __sim.sim_step()
-        
-        # print(ok)
-        # img_rgb = cv2.cvtColor(np.float32(img), cv2.COLOR_BGR2RGB)
-        # cv2.imshow('out', img_rgb)
-        # cv2.imwrite(f"{__sim.sim_time}.png",np.float32(img))
+        img, depth = __robot.get_image('base_cam')
     
 if __name__ == "__main__":
     main()
