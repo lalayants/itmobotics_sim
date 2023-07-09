@@ -101,7 +101,7 @@ class PyBulletRobot(robot.Robot):
         
         # camera view_matrix:
         
-        view_matrix = math.extrinsicGLview_matrix(self.ee_state(self.__cameras['camera_name'], "world").tf.A)
+        view_matrix = math.extrinsicGLview_matrix(self.ee_state(self.__cameras[camera_name], "world").tf.A)
         # projection_matrix = math.
 
         color, depth, segmask = self.__p.getCameraImage(
@@ -143,7 +143,7 @@ class PyBulletRobot(robot.Robot):
         # create a 4x4 transform matrix that goes from pixel coordinates (and depth values) to world coordinates
         proj_matrix = np.asarray(self.__cameras[camera_name]['proj_matrix']).reshape([4, 4], order="F")
         # view_matrix = EEState(self.__cameras[camera_name]['link'])
-        view_matrix = math.extrinsicGLview_matrix(self.ee_state(self.__cameras['camera_name'], "world").tf.A)
+        view_matrix = math.extrinsicGLview_matrix(self.ee_state(self.__cameras[camera_name], "world").tf.A)
         view_matrix = np.asarray(view_matrix).reshape([4, 4], order="F")
         tran_pix_world = np.linalg.inv(np.matmul(proj_matrix, view_matrix))
 
